@@ -1,0 +1,11 @@
+pytesseract 
+pdf2image
+Pillow
+streamlit
+googletrans
+speechrecognition
+gtts
+transformers
+fpdf
+easyocr
+pydub
