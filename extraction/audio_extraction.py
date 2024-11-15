@@ -6,7 +6,7 @@ def convert_to_wav(audio_file,output_dir="temp"):
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
-    wav_file = os.path.join(output_dir,os.path.splitext(os.path.basename(audio_file))[0]+".wav")
+    wav_file = os.path.join(output_dir,"temp_audio.wav")
 
     #COnvert MP# to wave
     audio = AudioSegment.from_file(audio_file)
@@ -32,7 +32,6 @@ def extract_text_from_audio(audio_path):
     
     except sr.RequestError as e:
         return f"Could not request results;{e}"
-    
 # if __name__ == "__main__":
 #     # Replace with the path to your MP3 or WAV file
 #     audio_path = "C:\\Users\\jatin\\OneDrive\\Desktop\\my.unknown"

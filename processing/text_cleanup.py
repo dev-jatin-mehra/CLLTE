@@ -10,9 +10,18 @@ from extraction.pdf_extraction import extract_text_from_pdf
 
 # Your code
 
-def reorder_text(text):
-    cleaned_text =  re.sub(r'[^A-Za-z0-9\s]','',text)
-    return cleaned_text
+# def reorder_text(text):
+#     cleaned_text =  re.sub(r'[^A-Za-z0-9\s]','',text)
+#     return cleaned_text
 
-text = extract_text_from_pdf(pdf_path="C:\\Users\\jatin\\OneDrive\\Desktop\\MLNOTES\\Python String.pdf")
+def reorder_text(text, keep_spaces=False):
+    """
+    Clean text to keep only letters and numbers.
+    """
+    if keep_spaces:
+        return re.sub(r"[^A-Za-z0-9\s]", "", text).strip()
+    return re.sub(r"[^A-Za-z0-9]", "", text).strip()
+
+
+text = extract_text_from_pdf(pdf_path="C:\\Users\\jatin\\OneDrive\\Desktop\\MLNOTES\\file handling python notes.pdf")
 print(reorder_text(text=text))
