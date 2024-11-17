@@ -32,6 +32,7 @@ def extract_text_from_audio(audio_path):
     
     except sr.RequestError as e:
         return f"Could not request results;{e}"
+       
 # if __name__ == "__main__":
 #     # Replace with the path to your MP3 or WAV file
 #     audio_path = "C:\\Users\\jatin\\OneDrive\\Desktop\\my.unknown"

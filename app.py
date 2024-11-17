@@ -9,7 +9,6 @@ from extraction.audio_extraction import extract_text_from_audio
 from processing.text_cleanup import reorder_text
 # from file_utils import save_to_text_file, save_to_pdf, save_to_audio
 from PIL import Image
-
 #set page configuration
 st.set_page_config(
     page_title="Cross-Lingual Text Tool",
@@ -30,7 +29,7 @@ st.markdown("**Upload a file or use live input to extract text, translate it, su
 file_type=""
 #Tabs
 tabs = st.tabs(["📤 Input", "📝 Processing", "🔊 Outputs"])
-extract_text=""
+extracted_text=""
 #Tab:1
 with tabs[0]:
     st.header("Input Section")
@@ -77,7 +76,7 @@ with tabs[0]:
                     st.write(extracted_text)
 
         elif file_type=="Video":
-            uploaded_file = st.file_uploader("Upload Your File:",type=["mp4"])
+            uploaded_file = st.file_uploader("Upload Your File:",type=[".mp4"])
             if uploaded_file:
                 file_extension = os.path.splitext(uploaded_file.name)[1].lower()
                 #CHECK
@@ -86,6 +85,7 @@ with tabs[0]:
                 else:
                     extracted_text = extract_text_from_audio(uploaded_file)
                     st.write(extracted_text)
+                    
     elif input_type=="Live Voice Input":
         st.write("Under Construction ! 😁")
 
