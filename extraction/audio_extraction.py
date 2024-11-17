@@ -17,7 +17,7 @@ def convert_to_wav(audio_file,output_dir="temp"):
 def extract_text_from_audio(audio_path):
     recognizer = sr.Recognizer()
 
-    if not audio_path.lower().endswith(".wav"):
+    if not audio_path.name.lower().endswith(".wav"):
         audio_path = convert_to_wav(audio_path)
 
     with sr.AudioFile(audio_path) as source:

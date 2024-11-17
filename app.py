@@ -9,6 +9,8 @@ from extraction.audio_extraction import extract_text_from_audio
 from processing.text_cleanup import reorder_text
 # from file_utils import save_to_text_file, save_to_pdf, save_to_audio
 from PIL import Image
+from googletrans import LANGUAGES
+from translation.translation import translate_text
 
 #set page configuration
 st.set_page_config(
@@ -30,7 +32,7 @@ st.markdown("**Upload a file or use live input to extract text, translate it, su
 file_type=""
 #Tabs
 tabs = st.tabs(["📤 Input", "📝 Processing", "🔊 Outputs"])
-extract_text=""
+extracted_text=""
 #Tab:1
 with tabs[0]:
     st.header("Input Section")
@@ -54,6 +56,8 @@ with tabs[0]:
                     st.image(image, caption="Uploaded Image", use_container_width=False)
                     extracted_text = extract_text_from_image(uploaded_file, lang_code)
                     st.write(extracted_text)
+                    
+
         elif file_type=="PDF":
             uploaded_file = st.file_uploader("Upload Your File:",type=["pdf"])
             if uploaded_file:
@@ -65,6 +69,9 @@ with tabs[0]:
                 else:
                     extracted_text = extract_text_from_pdf(uploaded_file)
                     st.write(extracted_text)
+                    
+
+
         elif file_type=="Audio":
             uploaded_file = st.file_uploader("Upload Your File:",type=["mp3","wav",".m4a",".aac",".flac"])
             if uploaded_file:
@@ -75,6 +82,8 @@ with tabs[0]:
                 else:
                     extracted_text = extract_text_from_audio(uploaded_file)
                     st.write(extracted_text)
+                    
+
 
         elif file_type=="Video":
             uploaded_file = st.file_uploader("Upload Your File:",type=["mp4"])
@@ -93,6 +102,14 @@ with tabs[0]:
 #Tab:2
 with tabs[1]:
     st.write("Will Start")
+    st.subheader("Translate Text")
+    language = st.selectbox("Select a language to translate into", options=list(LANGUAGES.values()))
+    language_code = list(LANGUAGES.keys())[list(LANGUAGES.values()).index(language)]
+
+    if st.button("Translate"):
+        translated_text = translate_text(extracted_text, language_code)
+        st.subheader("Translated Text")
+        st.write(translated_text)
 
 
 
