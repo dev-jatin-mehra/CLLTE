@@ -1,5 +1,6 @@
 import os 
 import streamlit as st #type:ignore
+import speech_recognition as sr
 from extraction.ocr_extraction import extract_text_from_image, supported_languages
 from extraction.pdf_extraction import extract_text_from_pdf
 from extraction.audio_extraction import extract_text_from_audio
@@ -97,7 +98,20 @@ with tabs[0]:
                     st.write(extracted_text)
                     
     elif input_type=="Live Voice Input":
-        st.write("Under Construction ! 😁")
+        st.write("Click to record live audio.")
+        if st.button("Record"):
+            recognizer = sr.Recognizer()
+            with sr.Microphone() as source:
+                st.write("Recording... Speak now!")
+                audio = recognizer.listen(source,timeout=5)
+                try:
+                    extracted_text = recognizer.recognize_google(audio)
+                    st.write("Transcribed Text")
+
+                    st.write(extracted_text)
+                except Exception as e:
+                    st.error(f"Error: {e}")
+
 
 
 #Tab:2
