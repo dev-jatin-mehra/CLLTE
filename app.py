@@ -86,7 +86,7 @@ with tabs[0]:
 
 
         elif file_type=="Video":
-            uploaded_file = st.file_uploader("Upload Your File:",type=["mp4"])
+            uploaded_file = st.file_uploader("Upload Your File:",type=[".mp4"])
             if uploaded_file:
                 file_extension = os.path.splitext(uploaded_file.name)[1].lower()
                 #CHECK
@@ -95,24 +95,36 @@ with tabs[0]:
                 else:
                     extracted_text = extract_text_from_audio(uploaded_file)
                     st.write(extracted_text)
+                    
     elif input_type=="Live Voice Input":
         st.write("Under Construction ! 😁")
 
 
 #Tab:2
 with tabs[1]:
-    st.write("Will Start")
-    st.subheader("Translate Text")
+    translated_text=""
+    summarized_text=""
+    structured_text=""
+    st.header("Processing Section")
+    if st.checkbox("Improve Text Structure"):
+        structured_text = reorder_text(extracted_text)
+        st.text_area(label="Reordered_text",value=structured_text)
+
+    else:
+        structured_text=extracted_text
+
+    #Translate Text
     language = st.selectbox("Select a language to translate into", options=list(LANGUAGES.values()))
     language_code = list(LANGUAGES.keys())[list(LANGUAGES.values()).index(language)]
 
     if st.button("Translate"):
-        translated_text = translate_text(extracted_text, language_code)
+        translated_text = translate_text(structured_text, language_code)
         st.subheader("Translated Text")
         st.write(translated_text)
 
-
-
+    #Summarize Text
+    if st.button("Summarize"):
+        st.write("JingalalaHuHu")
 #tab:3
 with tabs[2]:
     st.write("Will Start")
