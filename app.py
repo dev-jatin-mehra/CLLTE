@@ -5,7 +5,7 @@ from extraction.pdf_extraction import extract_text_from_pdf
 from extraction.audio_extraction import extract_text_from_audio
 # from video_extraction import extract_text_from_video
 # from translation import translate_text
-# from summarization import summarize_text
+from translation.summarization import summarize_text
 from processing.text_cleanup import reorder_text
 # from file_utils import save_to_text_file, save_to_pdf, save_to_audio
 from PIL import Image
@@ -124,7 +124,8 @@ with tabs[1]:
 
     #Summarize Text
     if st.button("Summarize"):
-        st.write("JingalalaHuHu")
+        summarized_text=summarize_text(translated_text)
+        st.write(summarized_text)
 #tab:3
 with tabs[2]:
     st.write("Will Start")
