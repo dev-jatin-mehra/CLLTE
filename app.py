@@ -1,5 +1,5 @@
 import os 
-import streamlit as st
+import streamlit as st #type:ignore
 from extraction.ocr_extraction import extract_text_from_image, supported_languages
 from extraction.pdf_extraction import extract_text_from_pdf
 from extraction.audio_extraction import extract_text_from_audio
@@ -9,7 +9,7 @@ from extraction.audio_extraction import extract_text_from_audio
 from processing.text_cleanup import reorder_text
 # from file_utils import save_to_text_file, save_to_pdf, save_to_audio
 from PIL import Image
-from googletrans import LANGUAGES
+from googletrans import LANGUAGES #type:ignore
 from translation.translation import translate_text
 
 #set page configuration
