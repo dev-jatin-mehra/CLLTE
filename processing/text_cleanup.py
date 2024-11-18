@@ -11,7 +11,7 @@ import re
 #     cleaned_text =  re.sub(r'[^A-Za-z0-9\s]','',text)
 #     return cleaned_text
 
-def reorder_text(text, keep_spaces=True):
+def reorder_text(text, keep_spaces=False):
     if keep_spaces:
         return re.sub(r"[^A-Za-z0-9\s]", "", text).strip()
     return re.sub(r"[^A-Za-z0-9]", "", text).strip()
