@@ -4,14 +4,14 @@ import speech_recognition as sr
 from extraction.ocr_extraction import extract_text_from_image, supported_languages
 from extraction.pdf_extraction import extract_text_from_pdf
 from extraction.audio_extraction import extract_text_from_audio
-# from video_extraction import extract_text_from_video
-# from translation import translate_text
+from extraction.video_extraction import extract_text_from_video
+from translation.translation import translate_text
 from translation.summarization import summarize_text
 from processing.text_cleanup import reorder_text
-# from file_utils import save_to_text_file, save_to_pdf, save_to_audio
+from download.file_utils import save_to_text_file, save_to_pdf, save_to_audio
 from PIL import Image
 from googletrans import LANGUAGES #type:ignore
-from translation.translation import translate_text
+
 
 #set page configuration
 st.set_page_config(
@@ -34,6 +34,8 @@ file_type=""
 #Tabs
 tabs = st.tabs(["📤 Input", "📝 Processing", "🔊 Outputs"])
 extracted_text=""
+summarized_text=""
+translated_text=""
 #Tab:1
 with tabs[0]:
     st.header("Input Section")
@@ -116,8 +118,6 @@ with tabs[0]:
 
 #Tab:2
 with tabs[1]:
-    translated_text=""
-    summarized_text=""
     structured_text=""
     st.header("Processing Section")
     if st.checkbox("Improve Text Structure"):
@@ -141,5 +141,42 @@ with tabs[1]:
         summarized_text=summarize_text(translated_text)
         st.write(summarized_text)
 #tab:3
-with tabs[2]:
-    st.write("Will Start")
+if extracted_text:
+    with tabs[2]:
+        st.header("Output Section")
+
+        export_choice = st.selectbox("Choose Text To Download:",["Translated Text","Summarized Text"])
+
+        if export_choice=="Translated Text" and 'translated_text' in locals():
+            output_text = translated_text
+        elif export_choice=="Summarized Text" and 'summarized_text' in locals():
+            output_text = summarized_text
+        else:
+            st.error("Please complete the translation or summarization before downloading")
+            output_text=None
+
+
+        if output_text:
+            download_format = st.selectbox("Choose Download Format:",["Text File","PDF","Audio"])
+            file_name = st.text_input("Enter file name (without extension):",value="output")
+
+            if st.button("Download"):
+                file_name = file_name if file_name else "output"
+
+                if download_format=="Text File":
+                    save_to_text_file(output_text,f"{file_name}.txt")
+                    with open(f"{file_name}.txt","rb") as file:
+                        st.download_button("Download as text file",file,f"{file_name}.txt")
+                
+                elif download_format == "PDF":
+                    save_to_pdf(output_text,f"{file_name}.pdf")
+                    with open(f"{file_name}.pdf","rb") as file:
+                        st.download_button("Download as PDF",file,f"{file_name}.pdf")
+
+                elif download_format == "Audio":
+                    audio_file = save_to_audio(output_text,f"{file_name}.mp3","en")
+                    with open(audio_file,"rb") as file:
+                        st.audio(file.read(),format="audio/mp3")
+                        st.download_button("Download as Audio",file,f"{file_name}.mp3")
+
+    
