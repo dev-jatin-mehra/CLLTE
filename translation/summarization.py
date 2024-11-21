@@ -1,4 +1,4 @@
-from transformers import pipeline
+from transformers import pipeline # type: ignore
 
 def summarize_text(text):
     summarizer = pipeline("summarization")
