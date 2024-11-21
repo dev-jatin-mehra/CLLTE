@@ -138,7 +138,7 @@ with tabs[1]:
 
     #Summarize Text
     if st.button("Summarize"):
-        summarized_text=summarize_text(translated_text)
+        summarized_text=summarize_text(extracted_text)
         st.write(summarized_text)
 #tab:3
 if extracted_text:
