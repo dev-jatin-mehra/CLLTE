@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # from transformers import pipeline
 
 # def summarize_text(text):
@@ -14,3 +15,10 @@ def summarize_text(text):
     summarizer = LexRankSummarizer()
     summary = summarizer(parser.document, sentences_count=3)
     return " ".join([str(sentence) for sentence in summary])
+=======
+from transformers import pipeline # type: ignore
+
+def summarize_text(text):
+    summarizer = pipeline("summarization")
+    return summarizer(text,max_length=530,min_length=130,do_sample=False)[0]["summary_text"]
+>>>>>>> fdff59d2a2cd8e91941060ec7b4493739315fe38
