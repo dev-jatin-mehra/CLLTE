@@ -146,10 +146,11 @@ if extracted_text:
         st.header("Output Section")
 
         export_choice = st.selectbox("Choose Text To Download:",["Translated Text","Summarized Text"])
-
-        if export_choice=="Translated Text" and 'translated_text' in locals():
+        
+        if export_choice=="Translated Text" and 'translated_text' :
             output_text = translated_text
-        elif export_choice=="Summarized Text" and 'summarized_text' in locals():
+            st.write(output_text)
+        elif export_choice=="Summarized Text" and 'summarized_text':
             output_text = summarized_text
         else:
             st.error("Please complete the translation or summarization before downloading")
