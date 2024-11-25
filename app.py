@@ -138,7 +138,8 @@ with tabs[1]:
 
     #Summarize Text
     if st.button("Summarize"):
-        summarized_text=summarize_text(extracted_text)
+        text=summarize_text(extracted_text)
+        summarized_text = translate_text(text,language_code)
         st.write(summarized_text)
 #tab:3
 if extracted_text:
@@ -146,10 +147,11 @@ if extracted_text:
         st.header("Output Section")
 
         export_choice = st.selectbox("Choose Text To Download:",["Translated Text","Summarized Text"])
-
-        if export_choice=="Translated Text" and 'translated_text' in locals():
+        
+        if export_choice=="Translated Text" and 'translated_text' in globals():
             output_text = translated_text
-        elif export_choice=="Summarized Text" and 'summarized_text' in locals():
+            
+        elif export_choice=="Summarized Text" and 'summarized_text' in globals():
             output_text = summarized_text
         else:
             st.error("Please complete the translation or summarization before downloading")
