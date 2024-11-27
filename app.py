@@ -8,9 +8,21 @@ from extraction.video_extraction import extract_text_from_video
 from translation.translation import translate_text
 from translation.summarization import summarize_text
 from processing.text_cleanup import reorder_text
-from download.file_utils import save_to_text_file, save_to_pdf, save_to_audio
+from download.file_utils import save_to_text_file, save_to_pdf
+from processing.text_to_audio import save_to_audio
 from PIL import Image
 from googletrans import LANGUAGES  # type: ignore
+
+# Accent options for gTTS
+accent_options = {
+    "English (US)": "en",
+    "English (UK)": "en-uk",
+    "Spanish": "es",
+    "French": "fr",
+    "German": "de",
+    "Hindi": "hi",
+    "Japanese": "ja",
+}
 
 # Set page configuration
 st.set_page_config(
@@ -164,8 +176,23 @@ if extracted_text:
                     with open(f"{file_name}.pdf", "rb") as file:
                         st.download_button("Download as PDF", file, f"{file_name}.pdf")
 
+                # elif download_format == "Audio":
+                #     audio_file = save_to_audio(output_text, f"{file_name}.mp3", "en")
+                #     with open(audio_file, "rb") as file:
+                #         st.audio(file.read(), format="audio/mp3")
+                #         st.download_button("Download as Audio", file, f"{file_name}.mp3")
+
+                # Add Audio Download Option
                 elif download_format == "Audio":
-                    audio_file = save_to_audio(output_text, f"{file_name}.mp3", "en")
-                    with open(audio_file, "rb") as file:
-                        st.audio(file.read(), format="audio/mp3")
-                        st.download_button("Download as Audio", file, f"{file_name}.mp3")
+                    accent = st.selectbox("Choose an accent for audio", list(accent_options.keys()))
+                    selected_language = accent_options[accent]
+
+                    # Generate and download audio
+                    audio_file = save_to_audio(output_text, f"{file_name}.mp3", language=selected_language)
+                    if audio_file:
+                        with open(audio_file, "rb") as file:
+                            st.audio(file.read(), format="audio/mp3")
+                            st.download_button("Download as Audio", file, f"{file_name}.mp3")
+                    else:
+                        st.error("Failed to generate audio. Please try again.")
+

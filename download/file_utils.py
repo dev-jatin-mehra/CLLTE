@@ -12,7 +12,3 @@ def save_to_pdf(text,filename):
     pdf.multi_cell(0,10,text)
     pdf.output(filename)
 
-def save_to_audio(text,filename,language="en"):
-    tts = gtts.gTTS(text,lang=language)
-    tts.save(filename)
-    return filename
