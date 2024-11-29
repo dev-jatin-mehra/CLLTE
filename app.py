@@ -95,15 +95,42 @@ with tabs[0]:
                     extracted_text = extract_text_from_audio(uploaded_file)
                     st.write(extracted_text)
 
+        # elif file_type == "Video":
+        #     uploaded_file = st.file_uploader("Upload Your File:", type=[".mp4"])
+        #     if uploaded_file:
+        #         file_name = uploaded_file.name
+        #         file_extension = os.path.splitext(file_name)[1].lower()
+        #         if file_extension != ".mp4":
+        #             st.error("Invalid file type! Please upload a video file with .mp4 extension.")
+        #         else:
+        #             extracted_text = extract_text_from_video(uploaded_file)
+        #             st.write(extracted_text)
+
+
+
         elif file_type == "Video":
-            uploaded_file = st.file_uploader("Upload Your File:", type=[".mp4"])
+            uploaded_file = st.file_uploader("Upload Your File:", type=["mp4"])
             if uploaded_file:
-                file_extension = os.path.splitext(uploaded_file.name)[1].lower()
+                file_name = uploaded_file.name
+                file_extension = os.path.splitext(file_name)[1].lower()
+                
                 if file_extension != ".mp4":
                     st.error("Invalid file type! Please upload a video file with .mp4 extension.")
                 else:
-                    extracted_text = extract_text_from_video(uploaded_file)
+                    # Save the uploaded file temporarily
+                    temp_file_path = os.path.join("temp", file_name)
+                    os.makedirs("temp", exist_ok=True)  # Ensure the temp folder exists
+                    
+                    with open(temp_file_path, "wb") as f:
+                        f.write(uploaded_file.read())  # Write uploaded content to a temp file
+                    
+                    # Process the file and extract text
+                    extracted_text = extract_text_from_video(temp_file_path)
                     st.write(extracted_text)
+                    
+                    # Clean up the temporary file
+                    os.remove(temp_file_path)
+
 
     elif input_type == "Live Voice Input":
         st.write("Click to record live audio.")
@@ -176,23 +203,23 @@ if extracted_text:
                     with open(f"{file_name}.pdf", "rb") as file:
                         st.download_button("Download as PDF", file, f"{file_name}.pdf")
 
-                # elif download_format == "Audio":
-                #     audio_file = save_to_audio(output_text, f"{file_name}.mp3", "en")
-                #     with open(audio_file, "rb") as file:
-                #         st.audio(file.read(), format="audio/mp3")
-                #         st.download_button("Download as Audio", file, f"{file_name}.mp3")
-
-                # Add Audio Download Option
                 elif download_format == "Audio":
-                    accent = st.selectbox("Choose an accent for audio", list(accent_options.keys()))
-                    selected_language = accent_options[accent]
+                    audio_file = save_to_audio(output_text, f"{file_name}.mp3", "en")
+                    with open(audio_file, "rb") as file:
+                        st.audio(file.read(), format="audio/mp3")
+                        st.download_button("Download as Audio", file, f"{file_name}.mp3")
 
-                    # Generate and download audio
-                    audio_file = save_to_audio(output_text, f"{file_name}.mp3", language=selected_language)
-                    if audio_file:
-                        with open(audio_file, "rb") as file:
-                            st.audio(file.read(), format="audio/mp3")
-                            st.download_button("Download as Audio", file, f"{file_name}.mp3")
-                    else:
-                        st.error("Failed to generate audio. Please try again.")
+                # # Add Audio Download Option
+                # elif download_format == "Audio":
+                #     accent = st.selectbox("Choose an accent for audio", list(accent_options.keys()))
+                #     selected_language = accent_options[accent]
+
+                #     # Generate and download audio
+                #     audio_file = save_to_audio(output_text, f"{file_name}.mp3", language=selected_language)
+                #     if audio_file:
+                #         with open(audio_file, "rb") as file:
+                #             st.audio(file.read(), format="audio/mp3")
+                #             st.download_button("Download as Audio", file, f"{file_name}.mp3")
+                #     else:
+                #         st.error("Failed to generate audio. Please try again.")
 
