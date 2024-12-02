@@ -209,17 +209,3 @@ if extracted_text:
                         st.audio(file.read(), format="audio/mp3")
                         st.download_button("Download as Audio", file, f"{file_name}.mp3")
 
-                # # Add Audio Download Option
-                # elif download_format == "Audio":
-                #     accent = st.selectbox("Choose an accent for audio", list(accent_options.keys()))
-                #     selected_language = accent_options[accent]
-
-                #     # Generate and download audio
-                #     audio_file = save_to_audio(output_text, f"{file_name}.mp3", language=selected_language)
-                #     if audio_file:
-                #         with open(audio_file, "rb") as file:
-                #             st.audio(file.read(), format="audio/mp3")
-                #             st.download_button("Download as Audio", file, f"{file_name}.mp3")
-                #     else:
-                #         st.error("Failed to generate audio. Please try again.")
-
