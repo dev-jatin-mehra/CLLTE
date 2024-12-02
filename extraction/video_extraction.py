@@ -1,44 +1,61 @@
-# import moviepy.editor as mp
-# from .audio_extraction import extract_text_from_audio
-
-# def extract_text_from_video(video_file):
-#     video = mp.VideoFileClip(video_file)
-#     audio_path = "../temp/temp_audio.wav"
-#     video.audio.write_audiofile(audio_path)
-#     return extract_text_from_audio(audio_path=audio_path)
-
+import streamlit as st
 import os
-import moviepy.editor as mp
-from .audio_extraction import extract_text_from_audio
+import tempfile
+from moviepy.editor import VideoFileClip
+import speech_recognition as sr
+from pydub import AudioSegment
 
 def extract_text_from_video(video_file):
-    # Ensure the temp directory exists
-    temp_dir = "./temp"
-    os.makedirs(temp_dir, exist_ok=True)
-
-    # Define the audio output path
-    audio_path = os.path.join(temp_dir, "temp_audio.wav")
-
     try:
-        # Load the video file
-        video = mp.VideoFileClip(video_file)
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as temp_video:
+            temp_video.write(video_file.read())
+            temp_video_path = temp_video.name
 
-        # Check if the video contains an audio stream
-        if video.audio is None:
-            raise ValueError("The video file does not contain an audio stream.")
+        video = VideoFileClip(temp_video_path)
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as temp_audio:
+            temp_audio_path = temp_audio.name
+            video.audio.write_audiofile(temp_audio_path)
 
-        # Extract the audio and save it as a WAV file
-        video.audio.write_audiofile(audio_path)
+        video.close()
 
-        # Extract text from the audio
-        extracted_text = extract_text_from_audio(audio_path=audio_path)
+        extracted_text = extract_text_from_audio(temp_audio_path)
+
+        os.remove(temp_video_path)  
+        os.remove(temp_audio_path)
 
         return extracted_text
 
     except Exception as e:
-        raise IOError(f"Error processing video: {e}")
+        return f"Error: {str(e)}"
 
-    finally:
-        # Clean up the temporary audio file
-        if os.path.exists(audio_path):
-            os.remove(audio_path)
+
+def extract_text_from_audio(audio_path):
+    try:
+        if not audio_path.lower().endswith(".wav"):
+            audio_path = convert_to_wav(audio_path)
+
+        recognizer = sr.Recognizer()
+        with sr.AudioFile(audio_path) as source:
+            audio_data = recognizer.record(source)
+
+        text = recognizer.recognize_google(audio_data, language="en-US")
+        return text
+
+    except sr.UnknownValueError:
+        return "Sorry! Could not understand the audio."
+    except sr.RequestError as e:
+        return f"Could not request results from the speech recognition service: {e}"
+    except Exception as e:
+        return f"Error: {str(e)}"
+
+
+def convert_to_wav(audio_file):
+    try:
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as temp_wav_file:
+            wav_path = temp_wav_file.name
+            audio = AudioSegment.from_file(audio_file)
+            audio.export(wav_path, format="wav")
+        return wav_path
+
+    except Exception as e:
+        raise Exception(f"Error converting audio file to WAV: {str(e)}")
