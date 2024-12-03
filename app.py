@@ -7,7 +7,7 @@ from extraction.audio_extraction import extract_text_from_audio
 from extraction.video_extraction import extract_text_from_video
 from translation.translation import translate_text
 from translation.summarization import summarize_text
-from processing.text_cleanup import reorder_text
+# from processing.text_cleanup import reorder_text
 from download.file_utils import save_to_text_file, save_to_pdf
 from processing.text_to_audio import save_to_audio
 from PIL import Image
@@ -97,18 +97,20 @@ with tabs[0]:
 
 
         elif file_type == "Video":
-            uploaded_file = st.file_uploader("Upload Your File:", type=["mp4"])
-            if uploaded_file:
-                file_extension = os.path.splitext(uploaded_file.name)[1].lower()
-                if file_extension != ".mp4":
-                    st.error("Invalid file type! Please upload a video file with .mp4 extension.")
-                else:
-                    st.info("Processing the video...")
-                    extracted_text = extract_text_from_video(uploaded_file)
-                    st.write("**Extracted Text:**")
-                    st.write(extracted_text)
-
-
+                uploaded_file = st.file_uploader("Upload Your File:", type=["mp4"])
+                if uploaded_file:
+                    file_extension = os.path.splitext(uploaded_file.name)[1].lower()
+                    if file_extension != ".mp4":
+                        st.error("Invalid file type! Please upload a video file with .mp4 extension.")
+                    else:
+                        language = st.selectbox("Select Language for Speech Recognition", 
+                                                ["English (en)", "Spanish (es)", "French (fr)", "German (de)", "Hindi (hi)", "Chinese (zh)"])
+                        language_code = language.split("(")[-1].strip(")")
+                        
+                        st.info("Processing the video...")
+                        extracted_text = extract_text_from_video(uploaded_file, language_code)
+                        st.write("*Extracted Text:*")
+                        st.write(extracted_text)
 
     elif input_type == "Live Voice Input":
         st.write("Click to record live audio.")
@@ -126,29 +128,31 @@ with tabs[0]:
 
 # Tab:2
 with tabs[1]:
-    structured_text = ""
+    trans_text = ""
     st.header("Processing Section")
-    if st.checkbox("Improve Text Structure"):
-        structured_text = reorder_text(extracted_text)
-        st.text_area(label="Reordered_text", value=structured_text)
-    else:
-        structured_text = extracted_text
 
     # Translate Text
     language = st.selectbox("Select a language to translate into", options=list(LANGUAGES.values()))
     language_code = list(LANGUAGES.keys())[list(LANGUAGES.values()).index(language)]
 
     if st.button("Translate"):
-        st.session_state.translated_text = translate_text(structured_text, language_code)
+        trans_text=st.session_state.translated_text = translate_text(extracted_text, language_code)
         st.subheader("Translated Text")
         st.write(st.session_state.translated_text)
 
     # Summarize Text
+    summary_length_option = st.selectbox("Select Summary Length:", ["short", "medium", "long"])
     if st.button("Summarize"):
-        summarized_content = summarize_text(extracted_text)
-        st.session_state.summarized_text = translate_text(summarized_content, language_code)
-        st.subheader("Summarized Text")
-        st.write(st.session_state.summarized_text)
+        if summary_length_option:
+            summarized_content=""
+            if trans_text:
+                summarized_content = summarize_text(trans_text,summary_length=summary_length_option)
+            else:
+                summarized_content = summarize_text(extracted_text,summary_length=summary_length_option)
+
+            st.session_state.summarized_text = translate_text(summarized_content, language_code)
+            st.subheader("Summarized Text")
+            st.write(st.session_state.summarized_text)
 
 # Tab:3
 if extracted_text:
