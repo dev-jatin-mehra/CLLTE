@@ -109,8 +109,15 @@ with tabs[0]:
                         
                         st.info("Processing the video...")
                         extracted_text = extract_text_from_video(uploaded_file, language_code)
+<<<<<<< HEAD
                         st.write("*Extracted Text:*")
                         st.write(extracted_text)
+=======
+                        st.write("**Extracted Text:**")
+                        st.write(extracted_text)
+
+
+>>>>>>> 2ae4ad251e8b60aa6ef4866a944fff1962b81a83
 
     elif input_type == "Live Voice Input":
         st.write("Click to record live audio.")
