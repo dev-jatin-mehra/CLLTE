@@ -38,11 +38,7 @@ def extract_text_from_audio(audio_path, language_code):
         with sr.AudioFile(audio_path) as source:
             audio_data = recognizer.record(source)
 
-<<<<<<< HEAD
         
-=======
-        # Recognize speech in the chosen language
->>>>>>> 2ae4ad251e8b60aa6ef4866a944fff1962b81a83
         text = recognizer.recognize_google(audio_data, language=language_code)
         return text
 
