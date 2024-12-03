@@ -97,16 +97,20 @@ with tabs[0]:
 
 
         elif file_type == "Video":
-            uploaded_file = st.file_uploader("Upload Your File:", type=["mp4"])
-            if uploaded_file:
-                file_extension = os.path.splitext(uploaded_file.name)[1].lower()
-                if file_extension != ".mp4":
-                    st.error("Invalid file type! Please upload a video file with .mp4 extension.")
-                else:
-                    st.info("Processing the video...")
-                    extracted_text = extract_text_from_video(uploaded_file)
-                    st.write("**Extracted Text:**")
-                    st.write(extracted_text)
+                uploaded_file = st.file_uploader("Upload Your File:", type=["mp4"])
+                if uploaded_file:
+                    file_extension = os.path.splitext(uploaded_file.name)[1].lower()
+                    if file_extension != ".mp4":
+                        st.error("Invalid file type! Please upload a video file with .mp4 extension.")
+                    else:
+                        language = st.selectbox("Select Language for Speech Recognition", 
+                                                ["English (en)", "Spanish (es)", "French (fr)", "German (de)", "Hindi (hi)", "Chinese (zh)"])
+                        language_code = language.split("(")[-1].strip(")")
+                        
+                        st.info("Processing the video...")
+                        extracted_text = extract_text_from_video(uploaded_file, language_code)
+                        st.write("**Extracted Text:**")
+                        st.write(extracted_text)
 
 
 

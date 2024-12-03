@@ -5,7 +5,7 @@ from moviepy.editor import VideoFileClip
 import speech_recognition as sr
 from pydub import AudioSegment
 
-def extract_text_from_video(video_file):
+def extract_text_from_video(video_file, language_code):
     try:
         with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as temp_video:
             temp_video.write(video_file.read())
@@ -18,7 +18,7 @@ def extract_text_from_video(video_file):
 
         video.close()
 
-        extracted_text = extract_text_from_audio(temp_audio_path)
+        extracted_text = extract_text_from_audio(temp_audio_path, language_code)
 
         os.remove(temp_video_path)  
         os.remove(temp_audio_path)
@@ -29,7 +29,7 @@ def extract_text_from_video(video_file):
         return f"Error: {str(e)}"
 
 
-def extract_text_from_audio(audio_path):
+def extract_text_from_audio(audio_path, language_code):
     try:
         if not audio_path.lower().endswith(".wav"):
             audio_path = convert_to_wav(audio_path)
@@ -38,7 +38,8 @@ def extract_text_from_audio(audio_path):
         with sr.AudioFile(audio_path) as source:
             audio_data = recognizer.record(source)
 
-        text = recognizer.recognize_google(audio_data, language="en-US")
+        # Recognize speech in the chosen language
+        text = recognizer.recognize_google(audio_data, language=language_code)
         return text
 
     except sr.UnknownValueError:
