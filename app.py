@@ -95,41 +95,19 @@ with tabs[0]:
                     extracted_text = extract_text_from_audio(uploaded_file)
                     st.write(extracted_text)
 
-        # elif file_type == "Video":
-        #     uploaded_file = st.file_uploader("Upload Your File:", type=[".mp4"])
-        #     if uploaded_file:
-        #         file_name = uploaded_file.name
-        #         file_extension = os.path.splitext(file_name)[1].lower()
-        #         if file_extension != ".mp4":
-        #             st.error("Invalid file type! Please upload a video file with .mp4 extension.")
-        #         else:
-        #             extracted_text = extract_text_from_video(uploaded_file)
-        #             st.write(extracted_text)
-
-
 
         elif file_type == "Video":
             uploaded_file = st.file_uploader("Upload Your File:", type=["mp4"])
             if uploaded_file:
-                file_name = uploaded_file.name
-                file_extension = os.path.splitext(file_name)[1].lower()
-                
+                file_extension = os.path.splitext(uploaded_file.name)[1].lower()
                 if file_extension != ".mp4":
                     st.error("Invalid file type! Please upload a video file with .mp4 extension.")
                 else:
-                    # Save the uploaded file temporarily
-                    temp_file_path = os.path.join("temp", file_name)
-                    os.makedirs("temp", exist_ok=True)  # Ensure the temp folder exists
-                    
-                    with open(temp_file_path, "wb") as f:
-                        f.write(uploaded_file.read())  # Write uploaded content to a temp file
-                    
-                    # Process the file and extract text
-                    extracted_text = extract_text_from_video(temp_file_path)
+                    st.info("Processing the video...")
+                    extracted_text = extract_text_from_video(uploaded_file)
+                    st.write("**Extracted Text:**")
                     st.write(extracted_text)
-                    
-                    # Clean up the temporary file
-                    os.remove(temp_file_path)
+
 
 
     elif input_type == "Live Voice Input":
