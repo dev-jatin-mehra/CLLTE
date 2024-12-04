@@ -27,17 +27,17 @@ accent_options = {
 # Set page configuration
 st.set_page_config(
     page_title="Cross-Lingual Text Tool",
-    page_icon="🌐",
+    page_icon="assets/main.png",
     layout='wide',
     initial_sidebar_state="collapsed",
 )
 
 # Sidebar 
-st.sidebar.image(image="assets/logo.jpg", width=50, channels="BGR")
-st.sidebar.title(body="Cross-Lingual Text Tool")
+st.sidebar.image(image="assets/main.png", width=100, channels="BGR")
+st.sidebar.title(body="Cross-Lingual ETS")
 st.sidebar.markdown(
     body="<h3>Easily extract, translate, summarize and convert to text/audio</h3><hr>",
-    help="@2024", unsafe_allow_html=True
+    help="2024", unsafe_allow_html=True
 )
 
 # Initialize session states for translated and summarized text
