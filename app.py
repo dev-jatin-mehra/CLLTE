@@ -112,20 +112,6 @@ with tabs[0]:
                         st.write("*Extracted Text:*")
                         st.write(extracted_text)
 
-    elif input_type == "Live Voice Input":
-        st.write("Click to record live audio.")
-        if st.button("Record"):
-            recognizer = sr.Recognizer()
-            with sr.Microphone() as source:
-                st.write("Recording... Speak now!")
-                audio = recognizer.listen(source, timeout=5)
-                try:
-                    extracted_text = recognizer.recognize_google(audio)
-                    st.write("Transcribed Text")
-                    st.write(extracted_text)
-                except Exception as e:
-                    st.error(f"Error: {e}")
-
 # Tab:2
 with tabs[1]:
     trans_text = ""
