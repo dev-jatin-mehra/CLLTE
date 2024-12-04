@@ -57,7 +57,7 @@ extracted_text = ""
 # Tab:1
 with tabs[0]:
     st.header("Input Section")
-    input_type = st.radio("Choose input type:", ["Nothing", "File Upload", "Live Voice Input"])
+    input_type = st.radio("Choose input type:", ["Nothing", "File Upload"])
 
     if input_type == "File Upload":
         file_type = st.selectbox("Select File Type:", ["None", "Image", "PDF", "Audio", "Video"])
