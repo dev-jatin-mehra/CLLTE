@@ -9,4 +9,3 @@ fpdf
 easyocr
 pydub
 moviepy
-PyAudio
