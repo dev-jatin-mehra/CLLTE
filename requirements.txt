@@ -8,6 +8,5 @@ transformers
 fpdf
 easyocr
 pydub
-PyPdf2
 moviepy
 PyAudio

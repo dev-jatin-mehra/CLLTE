@@ -171,7 +171,7 @@ if extracted_text:
                     st.download_button("Download as PDF", file, "output.pdf")
 
             elif download_format == "Audio":
-                st.session_state.accent_choice = st.selectbox("Select Accent",["us", "uk", "au", "ca"])
+                st.session_state.accent_choice = st.selectbox("Select Accent",["us", "uk", "au", "ca","in"])
                 audio_file = save_to_audio(output_text, "output.mp3", "en",accent=st.session_state.accent_choice)
                 with open(audio_file, "rb") as file:
                     st.audio(file.read(), format="audio/mp3")
