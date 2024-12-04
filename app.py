@@ -28,7 +28,7 @@ accent_options = {
 st.set_page_config(
     page_title="Cross-Lingual Text Tool",
     page_icon="assets/main.png",
-    layout='wide',
+    layout='centered',
     initial_sidebar_state="collapsed",
 )
 
@@ -157,23 +157,23 @@ if extracted_text:
         if output_text:
             download_format = st.selectbox("Choose Download Format:", ["Text File", "PDF", "Audio"])
             # file_name = st.text_input("Enter file name (without extension):", value="output")
-
-            if st.button("Download"):
+            # if st.button("Download"):
                 # file_name = file_name.strip() or "output"
 
-                if download_format == "Text File":
-                    file_path = save_to_text_file(output_text)
-                    with open(file_path, "rb") as file:
-                        st.download_button("Download as text file", file, "output.txt")
+            if download_format == "Text File":
+                file_path = save_to_text_file(output_text)
+                with open(file_path, "rb") as file:
+                    st.download_button("Download as text file", file, "output.txt")
 
-                elif download_format == "PDF":
-                    file_path = save_to_pdf(output_text)
-                    with open(file_path, "rb") as file:
-                        st.download_button("Download as PDF", file, "output.pdf")
+            elif download_format == "PDF":
+                file_path = save_to_pdf(output_text)
+                with open(file_path, "rb") as file:
+                    st.download_button("Download as PDF", file, "output.pdf")
 
-                elif download_format == "Audio":
-                    audio_file = save_to_audio(output_text, "output.mp3", "en")
-                    with open(audio_file, "rb") as file:
-                        st.audio(file.read(), format="audio/mp3")
-                        st.download_button("Download as Audio", file, "output.mp3")
+            elif download_format == "Audio":
+                st.session_state.accent_choice = st.selectbox("Select Accent",["us", "uk", "au", "ca"])
+                audio_file = save_to_audio(output_text, "output.mp3", "en",accent=st.session_state.accent_choice)
+                with open(audio_file, "rb") as file:
+                    st.audio(file.read(), format="audio/mp3")
+                    st.download_button("Download as Audio", file, "output.mp3")
 

@@ -1,12 +1,21 @@
 from gtts import gTTS
 import tempfile
 
-def save_to_audio(text, filename, language="en"):
+def save_to_audio(text, filename, language="en",accent="us"):
     try:
         if not text.strip():
             raise ValueError("Text cannot be empty for audio conversion.")
         
-        tts = gTTS(text=text, lang=language)
+        if accent == "us":
+            tts = gTTS(text=text, lang=language, tld="com")  # U.S. English accent
+        elif accent == "uk":
+            tts = gTTS(text=text, lang=language, tld="co.uk")  # U.K. English accent
+        elif accent == "au":
+            tts = gTTS(text=text, lang=language, tld="com.au")  # Australian English accent
+        elif accent == "ca":
+            tts = gTTS(text=text, lang=language, tld="ca")  # Canadian English accent
+        else:
+            tts = gTTS(text=text, lang=language)
         
         # Use a temporary file to save the audio
         with tempfile.NamedTemporaryFile(delete=False, mode='wb', suffix='.mp3') as temp_audio_file:
