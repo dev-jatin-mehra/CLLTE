@@ -76,6 +76,7 @@ This project is a comprehensive tool for extracting text from various sources (i
     ├── assets/               # Static assets like images
     ├── github.bat            # batch file for git push
     ├── gitpull.bat           # bacth file for git pull
+    ├── LICENSE.md            # MIT license
 
 ## Future Enhancements
 
