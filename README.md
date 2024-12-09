@@ -35,8 +35,8 @@ This project is a comprehensive tool for extracting text from various sources (i
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/cross-lingual-text-tool.git
-   cd cross-lingual-text-tool
+   git clone https://github.com/your-repo/CLLTE.git
+   cd CLLTE
    ```
 2. Create and Activate the virtual Environment
    ```bash
@@ -55,7 +55,7 @@ This project is a comprehensive tool for extracting text from various sources (i
 ## Project Structure
 
     ```bash
-    cross-lingual-text-tool/
+    CLLTE/
     ├── app.py                # Main Streamlit app
     ├── requirements.txt      # Dependencies
     ├── README.md             # Project documentation
