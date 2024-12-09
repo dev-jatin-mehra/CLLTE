@@ -20,7 +20,6 @@ This project is a comprehensive tool for extracting text from various sources (i
 3. **Output Options**
    - Download translated or summarized text as:
      - **Text File (.txt)**
-     - **PDF File (.pdf)**
      - **Audio File (.mp3)** with support for accent selection(us,uk,au,ca).
 
 ---
