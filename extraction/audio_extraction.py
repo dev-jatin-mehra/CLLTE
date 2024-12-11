@@ -10,7 +10,7 @@ def convert_to_wav(audio_file,output_dir="temp"):
 
     #COnvert MP# to wave
     audio = AudioSegment.from_file(audio_file)
-    trimmed_audio = audio[:7*1000]
+    trimmed_audio = audio[:20*1000]
     trimmed_audio.export(wav_file,format="wav")
     return wav_file
 
