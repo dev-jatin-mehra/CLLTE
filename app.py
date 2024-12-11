@@ -141,7 +141,7 @@ with tabs[1]:
                 st.success("Summarization complete!")
                 st.subheader("Summarized Text")
                 st.write(st.session_state.summarized_text)
-
+                
 # Tab:3
 if extracted_text:
     with tabs[2]:
