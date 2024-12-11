@@ -15,11 +15,19 @@ def summarize_text(text, summary_length="medium", language_code="en"):
     
     if language_code != "en":
         text = translate_text(text, "en")
+        
+    if len(text.split()) < 5:
+        return "Text is too short for summarization."
     
     config = length_config[summary_length]
-    summarized_text = summarizer(
-        text, max_length=config["max_length"], min_length=config["min_length"], do_sample=False
-    )[0]["summary_text"]
+    
+    try:
+        summarized_text = summarizer(
+            text, max_length=config["max_length"], min_length=config["min_length"], do_sample=False
+        )[0]["summary_text"]
+    except IndexError as e:
+        print(f"Error in summarization: {e}")
+        summarized_text = "Error summarizing the text."
     
     if language_code != "en":
         summarized_text = translate_text(summarized_text, language_code)  # Translate back to target language
