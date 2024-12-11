@@ -111,7 +111,7 @@ with tabs[0]:
 with tabs[1]:
     trans_text = ""
     st.header("Processing Section")
-
+    
     # Translate Text
     language = st.selectbox("Select a language to translate into", options=list(LANGUAGES.values()))
     language_code = list(LANGUAGES.keys())[list(LANGUAGES.values()).index(language)]
