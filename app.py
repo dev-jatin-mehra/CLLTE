@@ -15,9 +15,9 @@ from googletrans import LANGUAGES  # type: ignore
 
 # Set page configuration
 st.set_page_config(
-    page_title="Cross-Lingual Text Tool",
+    page_title="Cross-Lingual ETS",
     page_icon="assets/main.png",
-    layout='wide',
+    layout='centered',
     initial_sidebar_state="collapsed",
 )
 
