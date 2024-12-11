@@ -125,20 +125,23 @@ with tabs[1]:
 
     # Summarize Text
     summary_length_option = st.selectbox("Select Summary Length:", ["short", "medium", "long"])
+    # In the Summarize section, replace the summarization logic with the updated method
     if st.button("Summarize"):
         with st.spinner("Summarizing text..."):
             if summary_length_option:
-                summarized_content=""
+                summarized_content = ""
+                
+                # If there is translated text, use it; otherwise, use the extracted text
                 if trans_text:
-                    summarized_content = summarize_text(trans_text,summary_length=summary_length_option)
+                    summarized_content = summarize_text(trans_text, summary_length=summary_length_option, language_code=language_code)
                 else:
-                    summarized_content = summarize_text(extracted_text,summary_length=summary_length_option)
+                    summarized_content = summarize_text(extracted_text, summary_length=summary_length_option, language_code=language_code)
 
-                st.session_state.summarized_text = translate_text(summarized_content, language_code)
+                st.session_state.summarized_text = summarized_content
                 st.success("Summarization complete!")
                 st.subheader("Summarized Text")
                 st.write(st.session_state.summarized_text)
-
+                
 # Tab:3
 if extracted_text:
     with tabs[2]:
