@@ -8,8 +8,4 @@ transformers
 easyocr
 pydub
 moviepy==1.0.3
-<<<<<<< HEAD
 PyPDF2
-=======
-PyPDF2
->>>>>>> fd8368d5fdaf17c9fd36a80f18b3922feb88ca9a
