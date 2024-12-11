@@ -67,12 +67,14 @@ This project is a comprehensive tool for extracting text from various sources (i
     ├── translation/          # Translation and summarization
     │   ├── translation.py
     │   ├── summarization.py
-    ├── processing/           # Text cleanup and audio conversion
-    │   ├── text_cleanup.py
-    │   ├── text_to_audio.py
+    ├── tests/           # Files for testing
+    │   ├── checkvid.mp4
+    │   ├── one.mp3.....etc.
     ├── download/             # File download utilities
     │   ├── file_utils.py
+    │   ├── text_to_audio.py
     ├── assets/               # Static assets like images
+    │   ├── main.png          # Logo
     ├── github.bat            # batch file for git push
     ├── gitpull.bat           # bacth file for git pull
     ├── LICENSE.md            # MIT license
@@ -82,6 +84,7 @@ This project is a comprehensive tool for extracting text from various sources (i
 - Support for more OCR engines (e.g., Amazon Textract, PaddleOCR).
 - Advanced summarization models.
 - Enhanced UI for real-time translation feedback.
+- Upgraded level of consistency and accuracy.
 
 ## Credits
 
