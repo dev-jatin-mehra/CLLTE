@@ -1,6 +1,6 @@
 # 🌍 Cross-Lingual Text Extraction, Translation, and Summarization
 
-This project is a comprehensive tool for extracting text from various sources (images, PDFs, audio, and videos), translating it into multiple languages, summarizing it with customizable lengths, and providing options to download the output in various formats (text, PDF, or audio).
+This project is a comprehensive tool for extracting text from various sources (images, PDFs, audio, and videos), translating it into multiple languages, summarizing it with customizable lengths, and providing options to download the output in various formats (text or audio).
 
 ---
 
