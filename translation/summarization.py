@@ -13,7 +13,7 @@ def summarize_text(text, summary_length="medium", language_code="en"):
     if summary_length not in length_config:
         raise ValueError("Invalid summary length option. Choose 'short', 'medium', or 'long'.")
     
-    if language_code != "en":
+    if language_code != "en" or language_code=="en":
         text = translate_text(text, "en")
         
     if len(text.split()) < 5:
