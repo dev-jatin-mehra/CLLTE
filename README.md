@@ -83,8 +83,6 @@ This project is a comprehensive tool for extracting text from various sources (i
 
 - Support for more OCR engines (e.g., Amazon Textract, PaddleOCR).
 - Advanced summarization models.
-- Enhanced UI for real-time translation feedback.
-- Upgraded level of consistency and accuracy.
 
 ## Credits
 
