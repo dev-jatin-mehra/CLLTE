@@ -85,12 +85,9 @@ def extract_text_from_image(image_input, languages):
             "No valid languages selected. Please choose from: " + ", ".join(supported_languages.keys())
         )
 
-    # Initialize EasyOCR reader with selected languages
     reader = easyocr.Reader(languages, gpu=True)
-    # Handle input types
     image = Image.open(image_input)
     image_source = cv2.cvtColor(np.array(image),cv2.COLOR_RGB2BGR)
-    # Perform OCR on the image
     result = reader.readtext(image_source)
 
     for text in result:

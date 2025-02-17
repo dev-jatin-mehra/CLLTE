@@ -17,11 +17,10 @@ def save_to_audio(text, filename, language="en",accent="us"):
         else:
             tts = gTTS(text=text, lang=language)
         
-        # Use a temporary file to save the audio
         with tempfile.NamedTemporaryFile(delete=False, mode='wb', suffix='.mp3') as temp_audio_file:
-            tts.save(temp_audio_file.name)  # Save the audio to the temporary file
-            temp_audio_file.seek(0)  # Move cursor to the beginning of the file
-            return temp_audio_file.name  # Return the path of the temporary audio file
+            tts.save(temp_audio_file.name)
+            temp_audio_file.seek(0)
+            return temp_audio_file.name
     except Exception as e:
         print(f"Error generating audio: {e}")
         return None

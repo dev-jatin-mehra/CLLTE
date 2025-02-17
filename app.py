@@ -13,7 +13,6 @@ from download.text_to_audio import save_to_audio
 from PIL import Image
 from googletrans import LANGUAGES  # type: ignore
 
-# Set page configuration
 st.set_page_config(
     page_title="Cross-Lingual ETS",
     page_icon="assets/main.png",
@@ -21,7 +20,6 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# Sidebar 
 st.sidebar.image(image="assets/main.png", width=100, channels="BGR")
 st.sidebar.title(body="Cross-Lingual ETS")
 st.sidebar.markdown(
@@ -29,9 +27,8 @@ st.sidebar.markdown(
     help="2024", unsafe_allow_html=True
 )
 
-# Initialize session states for translated and summarized text
 if 'translated_text' not in st.session_state:
-    st.session_state.translated_text = None  # Use None to represent uninitialized state
+    st.session_state.translated_text = None
 if 'summarized_text' not in st.session_state:
     st.session_state.summarized_text = None
 
@@ -39,7 +36,6 @@ if 'summarized_text' not in st.session_state:
 st.title("🌍 Cross-Lingual Text Extraction, Translation, and Summarization")
 st.markdown("**Upload a file or use live input to extract text, translate it, summarize it, and even generate audio.**")
 file_type = ""
-# Tabs
 tabs = st.tabs(["📤 Input", "📝 Processing", "🔊 Outputs"])
 extracted_text = ""
 

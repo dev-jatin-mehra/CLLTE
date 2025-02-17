@@ -8,7 +8,7 @@ def convert_to_wav(audio_file,output_dir="temp"):
 
     wav_file = os.path.join(output_dir,"temp_audio.wav")
 
-    #COnvert MP# to wave
+    #COnvert MP4 to wave
     audio = AudioSegment.from_file(audio_file)
     trimmed_audio = audio[:20*1000]
     trimmed_audio.export(wav_file,format="wav")

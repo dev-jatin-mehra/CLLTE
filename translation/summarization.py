@@ -30,6 +30,6 @@ def summarize_text(text, summary_length="medium", language_code="en"):
         summarized_text = "Error summarizing the text."
     
     if language_code != "en":
-        summarized_text = translate_text(summarized_text, language_code)  # Translate back to target language
+        summarized_text = translate_text(summarized_text, language_code) 
 
     return summarized_text
